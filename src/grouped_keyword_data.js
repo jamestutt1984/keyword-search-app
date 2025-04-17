@@ -24,7 +24,7 @@ const groupedData = {
     "Tools & Methodologies": ["ReaxFF force field simulations"],
     "Collaborators & Sponsors": ["RxFF_Consulting"]
   },
-  "PSSW_YamamotoRadlinska": {
+  "PSSW_Yamamoto/Radlinska": {
     "Science Projects & Concepts": ["Cement hydration under microgravity"],
     "Tools & Methodologies": ["NASA NASMAT modeling"],
     "Collaborators & Sponsors": ["NASA Physical Sciences Research Program"],
@@ -70,7 +70,7 @@ const groupedData = {
     "Science Projects & Concepts": ["Plasma-embracive antennas and digital mission planning"],
     "Tools & Methodologies": ["Beamforming and waveform engineering"]
   },
-  "PSSW_KravetBilen": {
+  "PSSW_Kravet/Bilen": {
     "General Topic": ["Environmental testing for space systems"],
     "Science Projects & Concepts": ["Ground-based plasma and vacuum simulation for spacecraft"],
     "Tools & Methodologies": ["Thermal cycling and plasma source characterization"],
