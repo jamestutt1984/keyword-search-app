@@ -3,6 +3,13 @@ import groupedData from "./grouped_keyword_data";
 
 export default function KeywordSearch() {
   const [query, setQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const allCategories = Array.from(
+    new Set(
+      Object.values(groupedData).flatMap((entry) => Object.keys(entry))
+    )
+  ).sort();
 
   const highlight = (text) => {
     if (!query) return text;
@@ -19,19 +26,23 @@ export default function KeywordSearch() {
   };
 
   const filteredEntries = Object.entries(groupedData).filter(([presentation, categories]) => {
+    const cleanName = presentation
+      .replace(/^PSSW_/i, '')
+      .replace('YamamotoRadlinska', 'Yamamoto/Radlinska')
+      .replace('KravetBilen', 'Kravet/Bilen');
+
     const lowerQuery = query.toLowerCase();
-    return (
-      presentation
-        .replace(/^PSSW_/i, '')
-        .replace('YamamotoRadlinska', 'Yamamoto/Radlinska')
-        .replace('KravetBilen', 'Kravet/Bilen')
-        .toLowerCase()
-        .includes(lowerQuery) ||
+    const matchesQuery =
+      cleanName.toLowerCase().includes(lowerQuery) ||
       Object.entries(categories).some(([cat, keywords]) =>
         cat.toLowerCase().includes(lowerQuery) ||
         keywords.some((kw) => kw.toLowerCase().includes(lowerQuery))
-      )
-    );
+      );
+
+    const matchesCategory =
+      selectedCategory === "All" || Object.keys(categories).includes(selectedCategory);
+
+    return matchesQuery && matchesCategory;
   });
 
   return (
@@ -44,8 +55,18 @@ export default function KeywordSearch() {
         placeholder="Search by presentation, keyword, or category..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        style={{ width: "100%", padding: "0.5rem", marginBottom: "1.5rem", fontSize: "1rem" }}
+        style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem", fontSize: "1rem" }}
       />
+      <select
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+        style={{ width: "100%", padding: "0.5rem", marginBottom: "1.5rem", fontSize: "1rem" }}
+      >
+        <option value="All">All Categories</option>
+        {allCategories.map((cat) => (
+          <option key={cat} value={cat}>{cat}</option>
+        ))}
+      </select>
       <div style={{ display: "grid", gap: "1rem" }}>
         {filteredEntries.map(([presentation, categories]) => {
           const cleanName = presentation
