@@ -21,7 +21,12 @@ export default function KeywordSearch() {
   const filteredEntries = Object.entries(groupedData).filter(([presentation, categories]) => {
     const lowerQuery = query.toLowerCase();
     return (
-      presentation.replace(/^PSSW_/i, '').toLowerCase().includes(lowerQuery) ||
+      presentation
+        .replace(/^PSSW_/i, '')
+        .replace('YamamotoRadlinska', 'Yamamoto/Radlinska')
+        .replace('KravetBilen', 'Kravet/Bilen')
+        .toLowerCase()
+        .includes(lowerQuery) ||
       Object.entries(categories).some(([cat, keywords]) =>
         cat.toLowerCase().includes(lowerQuery) ||
         keywords.some((kw) => kw.toLowerCase().includes(lowerQuery))
@@ -43,7 +48,11 @@ export default function KeywordSearch() {
       />
       <div style={{ display: "grid", gap: "1rem" }}>
         {filteredEntries.map(([presentation, categories]) => {
-          const cleanName = presentation.replace(/^PSSW_/i, "");
+          const cleanName = presentation
+            .replace(/^PSSW_/i, '')
+            .replace('YamamotoRadlinska', 'Yamamoto/Radlinska')
+            .replace('KravetBilen', 'Kravet/Bilen');
+
           return (
             <div key={presentation} style={{ background: "white", borderRadius: "0.5rem", padding: "1rem", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>
               <h2 style={{ fontSize: "1.125rem", fontWeight: "600", marginBottom: "0.5rem" }}>
