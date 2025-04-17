@@ -21,7 +21,7 @@ export default function KeywordSearch() {
   const filteredEntries = Object.entries(groupedData).filter(([presentation, categories]) => {
     const lowerQuery = query.toLowerCase();
     return (
-      presentation.toLowerCase().includes(lowerQuery) ||
+      presentation.replace(/^PSSW_/i, '').toLowerCase().includes(lowerQuery) ||
       Object.entries(categories).some(([cat, keywords]) =>
         cat.toLowerCase().includes(lowerQuery) ||
         keywords.some((kw) => kw.toLowerCase().includes(lowerQuery))
