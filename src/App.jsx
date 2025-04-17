@@ -52,7 +52,6 @@ export default function KeywordSearch() {
             .replace(/^PSSW_/i, '')
             .replace('YamamotoRadlinska', 'Yamamoto/Radlinska')
             .replace('KravetBilen', 'Kravet/Bilen');
-
           return (
             <div key={presentation} style={{ background: "white", borderRadius: "0.5rem", padding: "1rem", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>
               <h2 style={{ fontSize: "1.125rem", fontWeight: "600", marginBottom: "0.5rem" }}>
