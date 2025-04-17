@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-
-import groupedData from "./grouped_keyword_data"; // assuming you save it as a module
+import groupedData from "./grouped_keyword_data";
 
 export default function KeywordSearch() {
   const [query, setQuery] = useState("");
@@ -13,7 +9,7 @@ export default function KeywordSearch() {
     const parts = text.split(new RegExp(`(${query})`, "gi"));
     return parts.map((part, i) =>
       part.toLowerCase() === query.toLowerCase() ? (
-        <mark key={i} className="bg-yellow-300 text-black">
+        <mark key={i} style={{ backgroundColor: "#fef08a", color: "black" }}>
           {part}
         </mark>
       ) : (
@@ -34,35 +30,38 @@ export default function KeywordSearch() {
   });
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Keyword Search (Grouped)</h1>
-      <Input
+    <div style={{ padding: "1rem", maxWidth: "800px", margin: "0 auto" }}>
+      <h1 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>
+        Keyword Search (Grouped)
+      </h1>
+      <input
+        type="text"
         placeholder="Search by presentation, keyword, or category..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="mb-6"
+        style={{ width: "100%", padding: "0.5rem", marginBottom: "1.5rem", fontSize: "1rem" }}
       />
-      <div className="grid gap-4">
+      <div style={{ display: "grid", gap: "1rem" }}>
         {filteredEntries.map(([presentation, categories]) => (
-          <Card key={presentation}>
-            <CardContent className="p-4">
-              <h2 className="text-lg font-semibold mb-2">{highlight(presentation)}</h2>
-              {Object.entries(categories).map(([category, keywords]) => (
-                <div key={category} className="mb-2">
-                  <Badge variant="outline" className="mr-2 mb-1 inline-block">
-                    {highlight(category)}
-                  </Badge>
-                  <span className="text-sm">
-                    {keywords.map((kw, i) => (
-                      <span key={i}>{highlight(kw)}{i < keywords.length - 1 ? ", " : ""}</span>
-                    ))}
-                  </span>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+          <div key={presentation} style={{ background: "white", borderRadius: "0.5rem", padding: "1rem", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>
+            <h2 style={{ fontSize: "1.125rem", fontWeight: "600", marginBottom: "0.5rem" }}>
+              {highlight(presentation)}
+            </h2>
+            {Object.entries(categories).map(([category, keywords]) => (
+              <div key={category} style={{ marginBottom: "0.5rem" }}>
+                <span style={{ border: "1px solid #ccc", borderRadius: "0.25rem", padding: "0.25rem 0.5rem", marginRight: "0.5rem", display: "inline-block", fontSize: "0.875rem" }}>
+                  {highlight(category)}
+                </span>
+                <span style={{ fontSize: "0.875rem" }}>
+                  {keywords.map((kw, i) => (
+                    <span key={i}>{highlight(kw)}{i < keywords.length - 1 ? ", " : ""}</span>
+                  ))}
+                </span>
+              </div>
+            ))}
+          </div>
         ))}
-        {filteredEntries.length === 0 && <div className="text-gray-500">No results found.</div>}
+        {filteredEntries.length === 0 && <div style={{ color: "gray" }}>No results found.</div>}
       </div>
     </div>
   );
